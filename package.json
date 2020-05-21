@@ -12,10 +12,10 @@
     "jest": "jest",
     "test": "start test.bat"
   },
-  "homepage": "git+https://github.com/lch3830638/vuex-axios-aync#readme",
+  "homepage": "git+https://github.com/lch3830638/vuex-axios-sync#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lch3830638/vuex-axios-aync"
+    "url": "git+https://github.com/lch3830638/vuex-axios-sync"
   },
   "peerDependencies": {
     "vuex": "^3.0.0",
