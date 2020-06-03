@@ -103,7 +103,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 
 
-const syncAxiosVuex = (axios, store, option = {}) => {
+const syncAxiosVuex = (store, axios, option = {}) => {
   const moduleName = option.moduleName || "loading";
   store.registerModule(moduleName, {
     namespaced: true,
@@ -117,7 +117,7 @@ const syncAxiosVuex = (axios, store, option = {}) => {
     },
     mutations: {
       REQUEST: (state, { effectName }) => {
-        if (Object(_utils__WEBPACK_IMPORTED_MODULE_0__["hasOwnerProperty"])(state.effects, effectName)) {
+        if (Object(_utils__WEBPACK_IMPORTED_MODULE_0__["hasOwnProperty"])(state.effects, effectName)) {
           state.effects[effectName] = true
         } else {
           state.effects = {
@@ -167,10 +167,10 @@ const syncAxiosVuex = (axios, store, option = {}) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hasOwnerProperty", function() { return hasOwnerProperty; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hasOwnProperty", function() { return hasOwnProperty; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getEffectName", function() { return getEffectName; });
-const hasOwnerProperty = (obj, key) => {
-  return Object.hasOwnerProperty.call(obj, key)
+const hasOwnProperty = (obj, key) => {
+  return Object.hasOwnProperty.call(obj, key)
 }
 
 const getEffectName = (config) => {
