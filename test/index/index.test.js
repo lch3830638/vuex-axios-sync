@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex, { mapGetters } from 'vuex'
 import request from './request'
-import syncAxiosVuex from '../../src/index'
+import syncAxiosVuex from '../../index'
 
 Vue.use(Vuex)
 Vue.config.devtools = false
