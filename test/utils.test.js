@@ -6,10 +6,17 @@ test("utils/hasOwnProperty", () => {
 })
 
 test("utils/getEffectName", () => {
-  const testObj = {
+  const params = {
     url: 'http://www.test.com/goodsList',
     baseURL: 'http://www.test.com',
     method: 'get'
   }
-  expect(getEffectName(testObj)).toBe('get/goodsList')
+  const withQueryParams = {
+    url: 'http://www.test.com/goodsList?a=1&b=2',
+    baseURL: 'http://www.test.com',
+    method: 'get'
+  }
+
+  expect(getEffectName(params)).toBe('get/goodsList')
+  expect(getEffectName(withQueryParams)).toBe('get/goodsList')
 })
