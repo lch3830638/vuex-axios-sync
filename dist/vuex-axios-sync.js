@@ -175,7 +175,8 @@ const hasOwnProperty = (obj, key) => {
 
 const getEffectName = (config) => {
   const { url, baseURL, method } = config;
-  return `${method}${url.replace(baseURL, "")}`;
+  const notQueryURL = url.split('?')[0]
+  return `${method}${notQueryURL.replace(baseURL, "")}`;
 }
 
 
