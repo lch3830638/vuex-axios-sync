@@ -8,4 +8,8 @@ const getEffectName = (config) => {
   return `${method}${notQueryURL.replace(baseURL, "")}`;
 }
 
-export { hasOwnProperty, getEffectName }
+const getRequestTime = (startTime) => {
+  return new Date().getTime - startTime
+}
+
+export { hasOwnProperty, getEffectName, getRequestTime }

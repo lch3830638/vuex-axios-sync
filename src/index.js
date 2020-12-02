@@ -1,7 +1,9 @@
-import { hasOwnProperty, getEffectName } from './utils'
+import { hasOwnProperty, getEffectName, getRequestTime } from './utils'
 
 const syncAxiosVuex = (store, axios, option = {}) => {
   const moduleName = option.moduleName || "loading";
+  const minRequestTime = option.minRequestTime || 0;
+  let requestStartTime = 0
   store.registerModule(moduleName, {
     namespaced: true,
     state: {
@@ -35,14 +37,26 @@ const syncAxiosVuex = (store, axios, option = {}) => {
   });
 
   axios.interceptors.request.use(config => {
+    requestStartTime = new Date().getTime()
     const effectName = getEffectName(config);
     store.commit(`${moduleName}/REQUEST`, { effectName });
     return config;
   });
 
   const requestComplete = config => {
+    const requestTime = getRequestTime(requestStartTime)
     const effectName = getEffectName(config);
-    store.commit(`${moduleName}/RESPONSE`, { effectName });
+    if (minRequestTime) {
+      setTimeout(() => {
+        store.commit(`${moduleName}/RESPONSE`, { effectName });
+      }, delay())
+    } else {
+      store.commit(`${moduleName}/RESPONSE`, { effectName });
+    }
+
+    function delay() {
+      return requestTime > minRequestTime ? 0 : minRequestTime - requestTime
+    }
   };
 
   axios.interceptors.response.use(res => {
