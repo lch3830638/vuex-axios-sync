@@ -38,6 +38,12 @@ export default = {
 syncVuexAxios(store, router, { moduleName: 'customName' } )
 ```
 
+支持最小请求时间（默认为0）,单位毫秒
+
+```
+syncVuexAxios(store,router, { minRequestTime: 0 } )
+```
+
 ## 如何工作
 + 在vuex中添加 loading 模块，初始state：
 ```
