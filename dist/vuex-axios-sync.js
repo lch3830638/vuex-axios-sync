@@ -195,7 +195,7 @@ const getEffectName = (config) => {
 }
 
 const getRequestTime = (startTime) => {
-  return new Date().getTime - startTime
+  return new Date().getTime() - startTime
 }
 
 
