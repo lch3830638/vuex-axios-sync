@@ -105,6 +105,8 @@ __webpack_require__.r(__webpack_exports__);
 
 const syncAxiosVuex = (store, axios, option = {}) => {
   const moduleName = option.moduleName || "loading";
+  const minRequestTime = option.minRequestTime || 0;
+  let requestStartTime = 0
   store.registerModule(moduleName, {
     namespaced: true,
     state: {
@@ -138,14 +140,26 @@ const syncAxiosVuex = (store, axios, option = {}) => {
   });
 
   axios.interceptors.request.use(config => {
+    requestStartTime = new Date().getTime()
     const effectName = Object(_utils__WEBPACK_IMPORTED_MODULE_0__["getEffectName"])(config);
     store.commit(`${moduleName}/REQUEST`, { effectName });
     return config;
   });
 
   const requestComplete = config => {
+    const requestTime = Object(_utils__WEBPACK_IMPORTED_MODULE_0__["getRequestTime"])(requestStartTime)
     const effectName = Object(_utils__WEBPACK_IMPORTED_MODULE_0__["getEffectName"])(config);
-    store.commit(`${moduleName}/RESPONSE`, { effectName });
+    if (minRequestTime) {
+      setTimeout(() => {
+        store.commit(`${moduleName}/RESPONSE`, { effectName });
+      }, delay())
+    } else {
+      store.commit(`${moduleName}/RESPONSE`, { effectName });
+    }
+
+    function delay() {
+      return requestTime > minRequestTime ? 0 : minRequestTime - requestTime
+    }
   };
 
   axios.interceptors.response.use(res => {
@@ -169,6 +183,7 @@ const syncAxiosVuex = (store, axios, option = {}) => {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hasOwnProperty", function() { return hasOwnProperty; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getEffectName", function() { return getEffectName; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getRequestTime", function() { return getRequestTime; });
 const hasOwnProperty = (obj, key) => {
   return Object.hasOwnProperty.call(obj, key)
 }
@@ -177,6 +192,10 @@ const getEffectName = (config) => {
   const { url, baseURL, method } = config;
   const notQueryURL = url.split('?')[0]
   return `${method}${notQueryURL.replace(baseURL, "")}`;
+}
+
+const getRequestTime = (startTime) => {
+  return new Date().getTime - startTime
 }
 
 
