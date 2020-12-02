@@ -1,4 +1,4 @@
-const { hasOwnProperty, getEffectName } = require('../src/utils')
+const { hasOwnProperty, getEffectName, getRequestTime } = require('../src/utils')
 
 test("utils/hasOwnProperty", () => {
   expect(hasOwnProperty({ a: 1 }, 'a')).toBe(true)
@@ -19,4 +19,8 @@ test("utils/getEffectName", () => {
 
   expect(getEffectName(params)).toBe('get/goodsList')
   expect(getEffectName(withQueryParams)).toBe('get/goodsList')
+})
+
+test('utils/getRequestTime', () => {
+  expect(typeof getRequestTime(new Date().getTime())).toBe('number')
 })
