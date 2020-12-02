@@ -6,8 +6,9 @@ import syncAxiosVuex from '../../index'
 Vue.use(Vuex)
 Vue.config.devtools = false
 
-function run(originModuleName, done) {
-  const moduleName = originModuleName || 'loading'
+function run(options, done) {
+  const moduleName = options.moduleName || 'loading'
+  const minRequestTime = options.minRequestTime || 0
   const store = new Vuex.Store()
   const url = '/goods'
   const effectsName = `get${url}`
@@ -17,8 +18,7 @@ function run(originModuleName, done) {
     expect(app.$el.textContent).toBe(`global:true,${effectsName}:true`)
     return config
   })
-
-  syncAxiosVuex(store, request, { moduleName: originModuleName })
+  syncAxiosVuex(store, request, options)
   const App = Vue.extend({
     computed: {
       ...mapGetters(moduleName, ['global', 'effects'])
@@ -34,17 +34,33 @@ function run(originModuleName, done) {
   expect(app.$el.textContent).toBe(`global:false,${effectsName}:undefined`)
   const moduleState = store.state[moduleName]
   return request({ url }).then(() => {
-    expect(moduleState.effects[effectsName]).toBe(false)
-    expect(moduleState.global).toBe(false)
-    expect(app.$el.textContent).toBe(`global:false,${effectsName}:false`)
-    done()
+    if (minRequestTime) {
+      expect(moduleState.effects[effectsName]).toBe(true)
+      expect(moduleState.global).toBe(true)
+      expect(app.$el.textContent).toBe(`global:true,${effectsName}:true`)
+      setTimeout(() => {
+        expect(moduleState.effects[effectsName]).toBe(false)
+        expect(moduleState.global).toBe(false)
+        expect(app.$el.textContent).toBe(`global:false,${effectsName}:false`)
+        done()
+      }, minRequestTime)
+    } else {
+      expect(moduleState.effects[effectsName]).toBe(false)
+      expect(moduleState.global).toBe(false)
+      expect(app.$el.textContent).toBe(`global:false,${effectsName}:false`)
+      done()
+    }
   })
 }
 
 test('default usage', (done) => {
-  run('', done)
+  run({}, done)
 })
 
 test('custom moduleName', (done) => {
-  run('loadingStatus', done)
+  run({ moduleName: 'loadingStatus' }, done)
+})
+
+test('minRequstTime', (done) => {
+  run({ minRequestTime: 400 }, done)
 })
