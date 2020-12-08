@@ -15,7 +15,7 @@ const syncAxiosVuex = (store, axios, option = {}) => {
       effects: state => state.effects,
     },
     mutations: {
-      REQUEST: (state, { effectName }) => {
+      REQUEST: (state, effectName) => {
         if (hasOwnProperty(state.effects, effectName)) {
           state.effects[effectName] = true
         } else {
@@ -26,7 +26,7 @@ const syncAxiosVuex = (store, axios, option = {}) => {
         }
         state.global = true;
       },
-      RESPONSE: (state, { effectName }) => {
+      RESPONSE: (state, effectName) => {
         state.effects[effectName] = false
         const effect = Object.keys(state.effects).find(key => state.effects[key])
         if (!effect) {
@@ -39,7 +39,7 @@ const syncAxiosVuex = (store, axios, option = {}) => {
   axios.interceptors.request.use(config => {
     requestStartTime = new Date().getTime()
     const effectName = getEffectName(config);
-    store.commit(`${moduleName}/REQUEST`, { effectName });
+    store.commit(`${moduleName}/REQUEST`, effectName);
     return config;
   });
 
@@ -48,10 +48,10 @@ const syncAxiosVuex = (store, axios, option = {}) => {
     const effectName = getEffectName(config);
     if (minRequestTime) {
       setTimeout(() => {
-        store.commit(`${moduleName}/RESPONSE`, { effectName });
+        store.commit(`${moduleName}/RESPONSE`, effectName);
       }, delay())
     } else {
-      store.commit(`${moduleName}/RESPONSE`, { effectName });
+      store.commit(`${moduleName}/RESPONSE`, effectName);
     }
 
     function delay() {
