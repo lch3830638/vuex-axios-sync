@@ -10,10 +10,6 @@ const syncAxiosVuex = (store, axios, option = {}) => {
       effects: {},
       global: false
     },
-    getters: {
-      global: state => state.global,
-      effects: state => state.effects,
-    },
     mutations: {
       REQUEST: (state, effectName) => {
         if (hasOwnProperty(state.effects, effectName)) {

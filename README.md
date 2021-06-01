@@ -25,7 +25,7 @@ syncVuexAxios(store,request)
 <script>
 export default = {
   computed: {
-    ...mapGetter('loading', ['global', 'effects'])
+    ...mapState('loading', ['global', 'effects'])
   }
 }
 
