@@ -113,12 +113,8 @@ const syncAxiosVuex = (store, axios, option = {}) => {
       effects: {},
       global: false
     },
-    getters: {
-      global: state => state.global,
-      effects: state => state.effects,
-    },
     mutations: {
-      REQUEST: (state, effectName) => {
+      SET_REQUEST: (state, effectName) => {
         if (Object(_utils__WEBPACK_IMPORTED_MODULE_0__["hasOwnProperty"])(state.effects, effectName)) {
           state.effects[effectName] = true
         } else {
@@ -129,7 +125,7 @@ const syncAxiosVuex = (store, axios, option = {}) => {
         }
         state.global = true;
       },
-      RESPONSE: (state, effectName) => {
+      SET_RESPONSE: (state, effectName) => {
         state.effects[effectName] = false
         const effect = Object.keys(state.effects).find(key => state.effects[key])
         if (!effect) {
@@ -142,7 +138,7 @@ const syncAxiosVuex = (store, axios, option = {}) => {
   axios.interceptors.request.use(config => {
     requestStartTime = new Date().getTime()
     const effectName = Object(_utils__WEBPACK_IMPORTED_MODULE_0__["getEffectName"])(config);
-    store.commit(`${moduleName}/REQUEST`, effectName);
+    store.commit(`${moduleName}/SET_REQUEST`, effectName);
     return config;
   });
 
@@ -151,10 +147,10 @@ const syncAxiosVuex = (store, axios, option = {}) => {
     const effectName = Object(_utils__WEBPACK_IMPORTED_MODULE_0__["getEffectName"])(config);
     if (minRequestTime) {
       setTimeout(() => {
-        store.commit(`${moduleName}/RESPONSE`, effectName);
+        store.commit(`${moduleName}/SET_RESPONSE`, effectName);
       }, delay())
     } else {
-      store.commit(`${moduleName}/RESPONSE`, effectName);
+      store.commit(`${moduleName}/SET_RESPONSE`, effectName);
     }
 
     function delay() {
