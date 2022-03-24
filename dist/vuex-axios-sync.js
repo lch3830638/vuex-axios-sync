@@ -158,14 +158,16 @@ const syncAxiosVuex = (store, axios, option = {}) => {
     }
   };
 
-  axios.interceptors.response.use(res => {
-    requestComplete(res.config);
-    return res;
-  }, error => {
-    requestComplete(error.config);
-    return Promise.reject(error);
+  axios.interceptors.response.handlers.unshift({
+    fulfilled: res => {
+      requestComplete(res.config);
+      return res;
+    },
+    rejected: error => {
+      requestComplete(error.config);
+      return Promise.reject(error);
+    }
   });
-  axios.interceptors.response.handlers = axios.interceptors.response.handlers.reverse();
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (syncAxiosVuex);
@@ -187,7 +189,7 @@ const hasOwnProperty = (obj, key) => {
 const getEffectName = (config) => {
   const { url, baseURL, method } = config;
   const notQueryURL = url.split('?')[0]
-  return `${method}${notQueryURL.replace(baseURL, "")}`;
+  return `${method.toLowerCase()}${notQueryURL.replace(baseURL, "")}`;
 }
 
 const getRequestTime = (startTime) => {

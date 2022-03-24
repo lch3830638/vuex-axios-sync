@@ -8,9 +8,10 @@
     "dist/"
   ],
   "scripts": {
+    "server": "start test.bat",
     "webpack": "webpack",
-    "jest": "jest",
-    "test": "start test.bat"
+    "prepack": "yarn server & yarn jest && yarn webpack",
+    "jest": "jest"
   },
   "homepage": "git+https://github.com/lch3830638/vuex-axios-sync#readme",
   "repository": {

@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Vuex, { mapGetters } from 'vuex'
+import Vuex, { mapState } from 'vuex'
 import request from './request'
 import syncAxiosVuex from '../../index'
 
@@ -21,7 +21,7 @@ function run(options, done) {
   syncAxiosVuex(store, request, options)
   const App = Vue.extend({
     computed: {
-      ...mapGetters(moduleName, ['global', 'effects'])
+      ...mapState(moduleName, ['global', 'effects'])
     },
     render(h) {
       return h('div', [`global:${this.global},${effectsName}:${this.effects[effectsName]}`])

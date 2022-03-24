@@ -5,7 +5,7 @@ const hasOwnProperty = (obj, key) => {
 const getEffectName = (config) => {
   const { url, baseURL, method } = config;
   const notQueryURL = url.split('?')[0]
-  return `${method}${notQueryURL.replace(baseURL, "")}`;
+  return `${method.toLowerCase()}${notQueryURL.replace(baseURL, "")}`;
 }
 
 const getRequestTime = (startTime) => {

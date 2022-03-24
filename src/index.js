@@ -55,14 +55,16 @@ const syncAxiosVuex = (store, axios, option = {}) => {
     }
   };
 
-  axios.interceptors.response.use(res => {
-    requestComplete(res.config);
-    return res;
-  }, error => {
-    requestComplete(error.config);
-    return Promise.reject(error);
+  axios.interceptors.response.handlers.unshift({
+    fulfilled: res => {
+      requestComplete(res.config);
+      return res;
+    },
+    rejected: error => {
+      requestComplete(error.config);
+      return Promise.reject(error);
+    }
   });
-  axios.interceptors.response.handlers = axios.interceptors.response.handlers.reverse();
 };
 
 export default syncAxiosVuex;
