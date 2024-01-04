@@ -1,6 +1,6 @@
 {
   "name": "vuex-axios-sync",
-  "version": "10.0.0",
+  "version": "10.0.0-beta",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./types/index.d.ts",
