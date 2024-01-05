@@ -10,10 +10,8 @@
     "types/"
   ],
   "scripts": {
-    "server": "start test.bat",
     "webpack": "webpack",
-    "prepack": "yarn server & yarn jest && yarn webpack",
-    "jest": "jest"
+    "prepack": "yarn webpack"
   },
   "homepage": "git+https://github.com/lch3830638/vuex-axios-sync#readme",
   "repository": {
@@ -21,17 +19,14 @@
     "url": "git+https://github.com/lch3830638/vuex-axios-sync"
   },
   "peerDependencies": {
-    "axios": "^0.16.0",
     "vuex": "^3.0.0"
   },
   "devDependencies": {
-    "@babel/plugin-transform-modules-commonjs": "^7.9.6",
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",
-    "axios": "^1.6.4",
+    "axios": "0.27.2",
     "express": "^4.17.1",
     "husky": "^4.2.5",
-    "jest": "^26.0.1",
     "terser-webpack-plugin": "^3.0.1",
     "vue": "^2.6.11",
     "vuex": "^4.1.0",
