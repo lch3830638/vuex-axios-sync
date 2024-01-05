@@ -1,11 +1,13 @@
 {
   "name": "vuex-axios-sync",
-  "version": "8.0.0",
+  "version": "11.0.0",
   "main": "index.js",
+  "types": "./types/index.d.ts",
   "license": "MIT",
   "files": [
     "index.js",
-    "dist/"
+    "dist/",
+    "types"
   ],
   "scripts": {
     "server": "start test.bat",
