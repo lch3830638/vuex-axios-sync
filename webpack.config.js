@@ -1,49 +1,23 @@
 const path = require('path')
 const TerserWebpackPlugin = require('terser-webpack-plugin')
 
-module.exports = [
-  {
-    mode: 'none',
-    entry: {
-      'index': './src/index.js',
-    },
-    output: {
-      path: path.join(__dirname, 'dist'),
-      filename: '[name].mjs',
-      library: {
-        type: 'module',
-      },
-    },
-    experiments: {
-      outputModule: true,
-    },
-    optimization: {
-      minimize: true,
-      minimizer: [new TerserWebpackPlugin({
-        test: /\.min\.js$/
-      })]
-    }
+module.exports = {
+  mode: 'none',
+  entry: {
+    'vuex-axios-sync': './src/index.js',
+    'vuex-axios-sync.min': './src/index.js',
   },
-  {
-    mode: 'none',
-    entry: {
-      'index': './src/index.js',
-    },
-    output: {
-      path: path.join(__dirname, 'dist'),
-      filename: '[name].cjs',
-      library: {
-        type: 'commonjs',
-      },
-    },
-    experiments: {
-      outputModule: true,
-    },
-    optimization: {
-      minimize: true,
-      minimizer: [new TerserWebpackPlugin({
-        test: /\.min\.js$/
-      })]
-    }
+  output: {
+    path: path.join(__dirname, 'dist'),
+    filename: '[name].js',
+    library: 'syncAxiosVuex',
+    libraryTarget: 'umd',
+    libraryExport: 'default'
+  },
+  optimization: {
+    minimize: true,
+    minimizer: [new TerserWebpackPlugin({
+      test: /\.min\.js$/
+    })]
   }
-]
+}
